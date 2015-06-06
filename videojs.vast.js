@@ -69,10 +69,16 @@
         return sources;
       },
 
+      replaceMacros: function(url) {
+        var ts = (+new Date()) + '' + Math.floor(Math.random() * 1000000);
+        return url.split('[timestamp]').join(ts);
+      },
+
       getContent: function () {
 
         // query vast url given in settings
-        vast.client.get(settings.url, function(response) {
+        var url = player.vast.replaceMacros(settings.url);
+        vast.client.get(url, function(response) {
           if (response) {
             // we got a response, deal with it
             for (var adIdx = 0; adIdx < response.ads.length; adIdx++) {
